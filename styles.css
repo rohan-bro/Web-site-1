@@ -3,11 +3,11 @@ body {
     margin: 0;
     padding: 0;
     background-color: #8b0000; /* Beige background */
-    color: #355e35; /* Dark slate gray text */
+    color: #e0fff; /* Dark slate gray text */
 }
 
 header {
-    background-color: #8b4513; /* Saddle brown */
+    background-color: #355e35; /* Saddle brown */
     padding: 1rem;
 }
 
