@@ -204,4 +204,114 @@ footer {
     }
 }
 
+/* --- Contact Page Modern Styles --- */
+.contact-modern {
+    padding: 80px 5%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.contact-header {
+    text-align: center;
+    margin-bottom: 60px;
+}
+
+.contact-header h1 {
+    font-size: 48px;
+    letter-spacing: -1px;
+    margin-bottom: 15px;
+}
+
+.contact-grid-container {
+    display: grid;
+    grid-template-columns: 1fr 1.5fr;
+    gap: 60px;
+}
+
+.detail-box {
+    margin-bottom: 40px;
+}
+
+.detail-box h3 {
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: #888;
+    margin-bottom: 10px;
+}
+
+.detail-box p {
+    font-size: 18px;
+    font-weight: 500;
+}
+
+.wa-contact-btn {
+    display: inline-block;
+    margin-top: 15px;
+    padding: 12px 25px;
+    background-color: #000;
+    color: #fff;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+/* Form Styling */
+.modern-form {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.form-group label {
+    font-size: 12px;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.form-group input, .form-group textarea {
+    padding: 15px;
+    border: 1px solid #ddd;
+    background-color: #f9f9f9;
+    font-size: 16px;
+    outline: none;
+    transition: 0.3s;
+}
+
+.form-group input:focus, .form-group textarea:focus {
+    border-color: #000;
+    background-color: #fff;
+}
+
+.submit-btn {
+    padding: 18px;
+    background-color: #000;
+    color: #fff;
+    border: none;
+    font-weight: bold;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: 0.3s;
+}
+
+.submit-btn:hover {
+    background-color: #333;
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+    .contact-grid-container {
+        grid-template-columns: 1fr;
+    }
+    .contact-header h1 {
+        font-size: 32px;
+    }
+}
 
