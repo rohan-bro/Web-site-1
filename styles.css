@@ -108,4 +108,12 @@ footer {
     border: none;
     cursor: pointer; /* মাউস নিলে হাতের চিহ্ন আসবে */
 }
+.logo img {
+    max-height: 50px;
+}
+.product img {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+}
 
