@@ -101,3 +101,11 @@ footer {
         flex-direction: column;
     }
 }
+.buy-now-btn {
+    background-color: green;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer; /* মাউস নিলে হাতের চিহ্ন আসবে */
+}
+
