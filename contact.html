@@ -3,13 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact - Old Money Shirt and Pant Shop</title>
+    <title>Contact - Nazmul Old Money Shop</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <header>
         <nav>
-            <div class="logo">Old Money Essentials</div>
+            <div class="logo">
+                <a href="index.html">
+                    <img src="LOGO_1766599361094.png" alt="নাজমুল এর দোকান" style="height: 50px; width: auto;">
+                </a>
+            </div>
             <ul>
                 <li><a href="index.html">Home</a></li>
                 <li><a href="about.html">About</a></li>
@@ -18,23 +22,33 @@
         </nav>
     </header>
 
-    <section class="contact">
+    <section class="contact-page">
         <h1>Contact Us</h1>
-        <form id="contact-form">
-            <label for="name">Name:</label>
-            <input type="text" id="name" required>
-            <label for="email">Email:</label>
-            <input type="email" id="email" required>
-            <label for="message">Message:</label>
-            <textarea id="message" required></textarea>
-            <button type="submit">Send</button>
-        </form>
+        <p>আপনার কোনো প্রশ্ন থাকলে বা অর্ডার করতে চাইলে আমাদের সাথে যোগাযোগ করুন।</p>
+
+        <div class="contact-container">
+            <div class="contact-info">
+                <h3>Contact Details</h3>
+                <p><strong>Email:</strong> 4541tanvir@gmail.com</p>
+                <p><strong>WhatsApp:</strong> +8801832679053</p>
+                <div style="margin-top: 20px;">
+                    <a href="https://wa.me/8801832679053" class="btn" style="background-color: #25d366;">WhatsApp Message</a>
+                </div>
+            </div>
+
+            <form action="https://formsubmit.co/4541tanvir@gmail.com" method="POST" class="contact-form">
+                <input type="text" name="name" placeholder="আপনার নাম" required>
+                <input type="email" name="email" placeholder="আপনার ইমেইল" required>
+                <textarea name="message" placeholder="আপনার মেসেজ..." rows="5" required></textarea>
+                
+                <input type="hidden" name="_next" value="https://n-bro.github.io/contact.html">
+                <button type="submit" class="btn">Send Email</button>
+            </form>
+        </div>
     </section>
 
     <footer>
         <p>&copy; 2023 Old Money Shirt and Pant Shop. All rights reserved.</p>
     </footer>
-
-    <script src="script.js"></script>
 </body>
 </html>
