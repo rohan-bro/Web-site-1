@@ -5,6 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Old Money shirt and pants Shop</title>
     <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Order Now বাটনের জন্য আলাদা একটু স্টাইল */
+        .btn-order {
+            background-color: #d8246c !important;
+            color: white !important;
+            margin-left: 10px;
+        }
+        .product .btn-form {
+            background-color: #28a745;
+            display: block;
+            margin-top: 10px;
+            text-decoration: none;
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -24,7 +42,10 @@
     <section class="hero">
         <h1>Elegant Shirts & Pants for the Discerning Gentleman</h1>
         <p>Timeless pieces inspired by classic style.</p>
-        <a href="#products" class="btn">Shop Now</a>
+        <div style="display: flex; justify-content: center; gap: 10px; flex-wrap: wrap;">
+            <a href="#products" class="btn">Shop Now</a>
+            <a href="order.html" class="btn btn-order">Order Now</a>
+        </div>
     </section>
 
     <section id="products" class="products">
@@ -35,28 +56,32 @@
                 <img src="images%20(18).jpeg" alt="Classic Shirt">
                 <h3>New trendy old-money premium shirt</h3>
                 <p>৳550</p>
-                <a href="https://wa.me/8801832679053?text=Hello! I want to buy the 'New trendy old-money premium shirt'. Price: ৳550" class="btn">Buy Now</a>
+                <a href="https://wa.me/8801832679053?text=Hello! I want to buy the 'New trendy old-money premium shirt'. Price: ৳550" class="btn">WhatsApp</a>
+                <a href="order.html?product=Old Money Premium Shirt&price=550" class="btn-form">Order via Form</a>
             </div>
 
             <div class="product">
                 <img src="winter-tshirt-men-black-1664371251-6562277.jpeg" alt="Black Winter T-shirt">
                 <h3>T-shirt</h3>
                 <p>৳550</p>
-                <a href="https://wa.me/8801832679053?text=Hello! I want to buy the 'Black Winter T-shirt'. Price: ৳550" class="btn">Buy Now</a>
+                <a href="https://wa.me/8801832679053?text=Hello! I want to buy the 'Black Winter T-shirt'. Price: ৳550" class="btn">WhatsApp</a>
+                <a href="order.html?product=T-shirt&price=550" class="btn-form">Order via Form</a>
             </div>
 
             <div class="product">
                 <img src="3616531283484_2_grande.jpg" alt="Cotton Polo Shirt">
                 <h3>Cotton Polo Shirt</h3>
                 <p>৳650</p>
-                <a href="https://wa.me/8801832679053?text=Hello! I want to buy the 'Cotton Polo Shirt'. Price: ৳650" class="btn">Buy Now</a>
+                <a href="https://wa.me/8801832679053?text=Hello! I want to buy the 'Cotton Polo Shirt'. Price: ৳650" class="btn">WhatsApp</a>
+                <a href="order.html?product=Cotton Polo Shirt&price=650" class="btn-form">Order via Form</a>
             </div>
 
             <div class="product">
                 <img src="images%20(19).jpeg" alt="Low cut baggy">
                 <h3>Low cut baggy</h3>
                 <p>৳750</p>
-                <a href="https://wa.me/8801832679053?text=Hello! I want to buy the 'Low cut baggy'. Price: ৳750" class="btn">Buy Now</a>
+                <a href="https://wa.me/8801832679053?text=Hello! I want to buy the 'Low cut baggy'. Price: ৳750" class="btn">WhatsApp</a>
+                <a href="order.html?product=Low cut baggy&price=750" class="btn-form">Order via Form</a>
             </div>
 
         </div>
