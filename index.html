@@ -37,7 +37,7 @@
                 <a href="https://wa.me/8801832679053" class="btn">WhatsApp</a>
                 <a href="order.html?product=Premium Shirt&price=550" class="btn-form">Order via Form</a>
             </div>
-            </div>
+        </div>
     </section>
 
     <section id="review-system">
@@ -58,6 +58,7 @@
         import { getAuth, signInWithRedirect, getRedirectResult, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
         import { getFirestore, collection, addDoc, query, orderBy, onSnapshot } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
+        // কনফিগারেশন পুনরায় সঠিক করা হয়েছে
         const firebaseConfig = {
             apiKey: "AIzaSyB6UEe9wpDIY60zZPgG0Z6l8OEj4S8oEuo",
             authDomain: "mystorereview.firebaseapp.com",
@@ -72,9 +73,7 @@
         const db = getFirestore(app);
         const provider = new GoogleAuthProvider();
 
-        // বাটন ফাংশন আরও শক্তিশালী করা হয়েছে
-        const submitBtn = document.getElementById("submitBtn");
-        submitBtn.onclick = async () => {
+        document.getElementById("submitBtn").onclick = async () => {
             const text = document.getElementById("reviewInput").value;
             if (!text || text.trim() === "") {
                 alert("দয়া করে কিছু লিখুন!");
@@ -83,15 +82,12 @@
             
             try {
                 localStorage.setItem("pendingReview", text);
-                console.log("Redirecting to Google...");
                 await signInWithRedirect(auth, provider);
             } catch (err) {
-                console.error("Login error:", err);
                 alert("লগইন শুরু করতে সমস্যা হয়েছে: " + err.message);
             }
         };
 
-        // ফিরে আসার পর রিভিউ পোস্ট করা
         getRedirectResult(auth).then(async (result) => {
             const pendingText = localStorage.getItem("pendingReview");
             if (result && result.user && pendingText) {
@@ -102,31 +98,23 @@
                     createdAt: new Date()
                 });
                 localStorage.removeItem("pendingReview");
-                document.getElementById("reviewInput").value = "";
-                alert("ধন্যবাদ " + result.user.displayName + "! আপনার রিভিউ পোস্ট হয়েছে।");
+                alert("ধন্যবাদ! আপনার রিভিউ পোস্ট হয়েছে।");
             }
-        }).catch(err => {
-            console.error("Redirect Result Error:", err);
         });
 
-        // রিয়েল-টাইম রিভিউ দেখানো
         const q = query(collection(db, "reviews"), orderBy("createdAt", "desc"));
         onSnapshot(q, (snapshot) => {
             const container = document.getElementById("review-container");
             container.innerHTML = "";
-            if (snapshot.empty) {
-                container.innerHTML = "<p>এখনো কোনো রিভিউ নেই।</p>";
-                return;
-            }
             snapshot.forEach((doc) => {
                 const d = doc.data();
                 container.innerHTML += `
                     <div class="review-box">
                         <div style="display:flex; align-items:center; gap:10px; margin-bottom:10px;">
-                            <img src="${d.photo}" style="width:35px; height:35px; border-radius:50%; background:#eee;">
+                            <img src="${d.photo}" style="width:35px; height:35px; border-radius:50%;">
                             <strong>${d.name}</strong>
                         </div>
-                        <p style="margin:0; font-size:14px; color:#333;">${d.text}</p>
+                        <p style="margin:0;">${d.text}</p>
                     </div>`;
             });
         });
