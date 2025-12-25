@@ -11,7 +11,7 @@
         .product .btn-form { background-color: #28a745; display: block; margin-top: 10px; text-decoration: none; color: white; padding: 10px; border-radius: 5px; font-size: 14px; }
         #review-system { padding: 40px 20px; text-align: center; background: #fff; border-top: 2px solid #eee; }
         .review-box { background: #f9f9f9; padding: 15px; border-radius: 10px; margin: 10px auto; text-align: left; max-width: 500px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); border: 1px solid #ddd; }
-        #reviewInput { width: 100%; max-width: 500px; height: 100px; padding: 10px; border-radius: 8px; border: 1px solid #ccc; margin-bottom: 10px; outline: none; box-sizing: border-box; }
+        #reviewInput { width: 100%; max-width: 500px; height: 100px; padding: 10px; border-radius: 8px; border: 1px solid #ccc; margin-bottom: 10px; outline: none; box-sizing: border-box; font-family: inherit; }
         .btn-review { background: #1a1a1a; color: white; padding: 15px 30px; border-radius: 35px; cursor: pointer; border: none; font-weight: bold; display: flex; align-items: center; justify-content: center; gap: 10px; margin: 0 auto; min-width: 250px; }
     </style>
 </head>
@@ -37,6 +37,27 @@
                 <a href="https://wa.me/8801832679053" class="btn">WhatsApp</a>
                 <a href="order.html?product=Premium Shirt&price=550" class="btn-form">Order via Form</a>
             </div>
+            <div class="product">
+                <img src="winter-tshirt-men-black-1664371251-6562277.jpeg" alt="Black Winter T-shirt">
+                <h3>Black Winter T-shirt</h3>
+                <p>৳550</p>
+                <a href="https://wa.me/8801832679053" class="btn">WhatsApp</a>
+                <a href="order.html?product=Winter T-shirt&price=550" class="btn-form">Order via Form</a>
+            </div>
+            <div class="product">
+                <img src="3616531283484_2_grande.jpg" alt="Cotton Polo Shirt">
+                <h3>Cotton Polo Shirt</h3>
+                <p>৳650</p>
+                <a href="https://wa.me/8801832679053" class="btn">WhatsApp</a>
+                <a href="order.html?product=Polo Shirt&price=650" class="btn-form">Order via Form</a>
+            </div>
+            <div class="product">
+                <img src="images%20(19).jpeg" alt="Low cut baggy">
+                <h3>Low cut baggy</h3>
+                <p>৳750</p>
+                <a href="https://wa.me/8801832679053" class="btn">WhatsApp</a>
+                <a href="order.html?product=Baggy Pant&price=750" class="btn-form">Order via Form</a>
+            </div>
         </div>
     </section>
 
@@ -58,7 +79,7 @@
         import { getAuth, signInWithRedirect, getRedirectResult, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
         import { getFirestore, collection, addDoc, query, orderBy, onSnapshot } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-        // কনফিগারেশন পুনরায় সঠিক করা হয়েছে
+        // সঠিক কনফিগারেশন - এটি পরিবর্তন করবেন না
         const firebaseConfig = {
             apiKey: "AIzaSyB6UEe9wpDIY60zZPgG0Z6l8OEj4S8oEuo",
             authDomain: "mystorereview.firebaseapp.com",
@@ -79,18 +100,17 @@
                 alert("দয়া করে কিছু লিখুন!");
                 return;
             }
-            
             try {
                 localStorage.setItem("pendingReview", text);
                 await signInWithRedirect(auth, provider);
             } catch (err) {
-                alert("লগইন শুরু করতে সমস্যা হয়েছে: " + err.message);
+                alert("লগইন এরর: " + err.message);
             }
         };
 
         getRedirectResult(auth).then(async (result) => {
             const pendingText = localStorage.getItem("pendingReview");
-            if (result && result.user && pendingText) {
+            if (result?.user && pendingText) {
                 await addDoc(collection(db, "reviews"), {
                     name: result.user.displayName,
                     photo: result.user.photoURL,
@@ -98,7 +118,8 @@
                     createdAt: new Date()
                 });
                 localStorage.removeItem("pendingReview");
-                alert("ধন্যবাদ! আপনার রিভিউ পোস্ট হয়েছে।");
+                document.getElementById("reviewInput").value = "";
+                alert("আপনার রিভিউটি জমা হয়েছে!");
             }
         });
 
@@ -106,6 +127,10 @@
         onSnapshot(q, (snapshot) => {
             const container = document.getElementById("review-container");
             container.innerHTML = "";
+            if (snapshot.empty) {
+                container.innerHTML = "<p>এখনো কোনো রিভিউ নেই।</p>";
+                return;
+            }
             snapshot.forEach((doc) => {
                 const d = doc.data();
                 container.innerHTML += `
