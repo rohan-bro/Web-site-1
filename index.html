@@ -7,8 +7,9 @@
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
+        /* বাটন ও লেআউট ফিক্স */
         .btn-order { background-color: #d8246c !important; color: white !important; margin-left: 10px; }
-        .product .btn-form { background-color: #28a745; display: block; margin-top: 10px; text-decoration: none; color: white; padding: 10px; border-radius: 5px; font-size: 14px; }
+        .product .btn-form { background-color: #28a745; display: block; margin-top: 10px; text-decoration: none; color: white; padding: 10px; border-radius: 5px; font-size: 14px; text-align: center;}
         #review-system { padding: 40px 20px; text-align: center; background: #fff; border-top: 2px solid #eee; }
         .review-box { background: #f9f9f9; padding: 15px; border-radius: 10px; margin: 10px auto; text-align: left; max-width: 500px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); border: 1px solid #ddd; }
         #reviewInput { width: 100%; max-width: 500px; height: 100px; padding: 15px; border-radius: 12px; border: 1px solid #ccc; margin-bottom: 10px; outline: none; box-sizing: border-box; }
@@ -79,13 +80,15 @@
         import { getAuth, signInWithRedirect, getRedirectResult, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
         import { getFirestore, collection, addDoc, query, orderBy, onSnapshot } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
+        // স্ক্রিনশট থেকে নেওয়া একদম সঠিক Config
         const firebaseConfig = {
             apiKey: "AIzaSyB6UEe9wpDIY60zZpG0VxnTQ0U8zZ_LhM", 
             authDomain: "mystorereview.firebaseapp.com",
             projectId: "mystorereview",
             storageBucket: "mystorereview.firebasestorage.app",
             messagingSenderId: "996106395850",
-            appId: "1:996106395850:web:b46daa626871e41c345433"
+            appId: "1:996106395850:web:b46daa626871e41c345433",
+            measurementId: "G-8P3M6MZLN9"
         };
 
         const app = initializeApp(firebaseConfig);
@@ -93,9 +96,8 @@
         const db = getFirestore(app);
         const provider = new GoogleAuthProvider();
 
-        // সরাসরি বাটন ক্লিক ইভেন্ট
-        const submitBtn = document.getElementById("submitBtn");
-        submitBtn.addEventListener("click", async () => {
+        // বাটন ক্লিক ফিক্স
+        document.getElementById("submitBtn").addEventListener("click", async () => {
             const text = document.getElementById("reviewInput").value;
             if (!text || text.trim() === "") {
                 alert("দয়া করে কিছু লিখুন!");
@@ -103,12 +105,14 @@
             }
             try {
                 localStorage.setItem("pendingReview", text);
+                // পপ-আপের বদলে রিডাইরেক্ট ব্যবহার করা হয়েছে যাতে ব্ল্যাঙ্ক স্ক্রিন না আসে
                 await signInWithRedirect(auth, provider);
             } catch (err) {
-                alert("Error: " + err.message);
+                alert("এরর: " + err.message);
             }
         });
 
+        // লগইন সফল হলে রিভিউ সেভ করা
         getRedirectResult(auth).then(async (result) => {
             const pendingText = localStorage.getItem("pendingReview");
             if (result?.user && pendingText) {
@@ -119,13 +123,19 @@
                     createdAt: new Date()
                 });
                 localStorage.removeItem("pendingReview");
-                alert("ধন্যবাদ! আপনার রিভিউটি জমা হয়েছে।");
+                alert("ধন্যবাদ! রিভিউ পোস্ট হয়েছে।");
             }
-        });
+        }).catch(err => console.error(err));
 
-        onSnapshot(query(collection(db, "reviews"), orderBy("createdAt", "desc")), (snapshot) => {
+        // রিভিউ ডিসপ্লে করা
+        const q = query(collection(db, "reviews"), orderBy("createdAt", "desc"));
+        onSnapshot(q, (snapshot) => {
             const container = document.getElementById("review-container");
             container.innerHTML = "";
+            if (snapshot.empty) {
+                container.innerHTML = "<p>এখনো কোনো রিভিউ নেই।</p>";
+                return;
+            }
             snapshot.forEach((doc) => {
                 const d = doc.data();
                 container.innerHTML += `
