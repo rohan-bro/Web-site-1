@@ -79,15 +79,13 @@
         import { getAuth, signInWithRedirect, getRedirectResult, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
         import { getFirestore, collection, addDoc, query, orderBy, onSnapshot } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-        // আপনার প্রোজেক্টের আসল কনফিগারেশন
         const firebaseConfig = {
             apiKey: "AIzaSyB6UEe9wpDIY60zZpG0VxnTQ0U8zZ_LhM", 
             authDomain: "mystorereview.firebaseapp.com",
             projectId: "mystorereview",
             storageBucket: "mystorereview.firebasestorage.app",
             messagingSenderId: "996106395850",
-            appId: "1:996106395850:web:b46daa626871e41c345433",
-            measurementId: "G-8P3M6MZLN9"
+            appId: "1:996106395850:web:b46daa626871e41c345433"
         };
 
         const app = initializeApp(firebaseConfig);
@@ -105,13 +103,14 @@
                 localStorage.setItem("pendingReview", text);
                 await signInWithRedirect(auth, provider);
             } catch (err) {
-                alert("লগইন শুরু করতে সমস্যা হয়েছে: " + err.message);
+                alert("এরর: " + err.message);
             }
         };
 
+        // পেজ লোড হওয়ার পর রিডাইরেক্ট রেজাল্ট চেক করা
         getRedirectResult(auth).then(async (result) => {
             const pendingText = localStorage.getItem("pendingReview");
-            if (result && result.user && pendingText) {
+            if (result?.user && pendingText) {
                 await addDoc(collection(db, "reviews"), {
                     name: result.user.displayName,
                     photo: result.user.photoURL,
@@ -119,18 +118,18 @@
                     createdAt: new Date()
                 });
                 localStorage.removeItem("pendingReview");
-                alert("ধন্যবাদ! আপনার রিভিউটি পোস্ট হয়েছে।");
+                alert("ধন্যবাদ! রিভিউ পোস্ট হয়েছে।");
             }
-        }).catch(err => console.error(err));
+        }).catch(err => {
+            if(err.code === "auth/api-key-not-valid") {
+                console.error("আপনার API Key-তে সমস্যা আছে। দয়া করে Firebase কনসোল চেক করুন।");
+            }
+        });
 
         const q = query(collection(db, "reviews"), orderBy("createdAt", "desc"));
         onSnapshot(q, (snapshot) => {
             const container = document.getElementById("review-container");
             container.innerHTML = "";
-            if (snapshot.empty) {
-                container.innerHTML = "<p>এখনো কোনো রিভিউ নেই। প্রথম রিভিউটি আপনি দিন!</p>";
-                return;
-            }
             snapshot.forEach((doc) => {
                 const d = doc.data();
                 container.innerHTML += `
