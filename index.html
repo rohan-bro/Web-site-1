@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        /* ডিজাইন ঠিক রাখার জন্য সিএসএস */
         .btn-order { background-color: #d8246c !important; color: white !important; margin-left: 10px; }
         .product .btn-form { background-color: #28a745; display: block; margin-top: 10px; text-decoration: none; color: white; padding: 10px; border-radius: 5px; font-size: 14px; }
         #review-system { padding: 40px 20px; text-align: center; background: #fff; border-top: 2px solid #eee; }
@@ -89,7 +88,6 @@
         import { getAuth, signInWithRedirect, getRedirectResult, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
         import { getFirestore, collection, addDoc, query, orderBy, onSnapshot } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-        // Firebase কনফিগারেশন - এটি সঠিক করা হয়েছে
         const firebaseConfig = {
             apiKey: "AIzaSyB6UEe9wpDIY60zZPgG0Z6l8OEj4S8oEuo",
             authDomain: "mystorereview.firebaseapp.com",
@@ -104,7 +102,6 @@
         const db = getFirestore(app);
         const provider = new GoogleAuthProvider();
 
-        // বাটন ক্লিক ইভেন্ট
         document.getElementById("submitBtn").onclick = async () => {
             const text = document.getElementById("reviewInput").value;
             if (!text || text.trim() === "") {
@@ -120,7 +117,6 @@
             }
         };
 
-        // ফিরে আসার পর ডেটা জমা দেওয়া
         getRedirectResult(auth).then(async (result) => {
             const pendingText = localStorage.getItem("pendingReview");
             if (result && result.user && pendingText) {
@@ -131,15 +127,18 @@
                     createdAt: new Date()
                 });
                 localStorage.removeItem("pendingReview");
-                alert("ধন্যবাদ " + result.user.displayName + "! রিভিউ পোস্ট হয়েছে।");
+                alert("ধন্যবাদ! আপনার রিভিউটি পোস্ট হয়েছে।");
             }
         }).catch(err => console.error(err));
 
-        // রিভিউ লোড করা
         const q = query(collection(db, "reviews"), orderBy("createdAt", "desc"));
         onSnapshot(q, (snapshot) => {
             const container = document.getElementById("review-container");
             container.innerHTML = "";
+            if (snapshot.empty) {
+                container.innerHTML = "<p>এখনো কোনো রিভিউ নেই।</p>";
+                return;
+            }
             snapshot.forEach((doc) => {
                 const d = doc.data();
                 container.innerHTML += `
