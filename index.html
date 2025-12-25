@@ -1,108 +1,106 @@
-h<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Old Money Collection</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Vintage Vibes Shop</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
     <style>
-        /* আপনার ডিজাইন সুন্দর করার জন্য */
-        .product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 15px; padding: 15px; }
-        .product { border: 1px solid #ddd; padding: 10px; border-radius: 12px; text-align: center; background: #fff; }
-        .product img { width: 100%; height: 180px; object-fit: cover; border-radius: 8px; }
-        .btn-order { background-color: #28a745; display: block; margin-top: 8px; text-decoration: none; color: white; padding: 8px; border-radius: 5px; font-weight: bold; }
-        #review-system { padding: 30px 15px; text-align: center; background: #f9f9f9; border-top: 2px solid #ddd; }
-        #reviewInput { width: 100%; max-width: 400px; height: 80px; padding: 10px; border-radius: 8px; border: 1px solid #ccc; margin-bottom: 10px; box-sizing: border-box; }
-        .btn-review { background: #1a1a1a; color: white; padding: 12px; border-radius: 25px; cursor: pointer; border: none; font-weight: bold; width: 100%; max-width: 250px; margin: 0 auto; display: block; }
-        .review-box { background: #fff; padding: 12px; border-radius: 8px; margin: 8px auto; text-align: left; max-width: 400px; border: 1px solid #eee; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        /* সম্পূর্ণ ক্লিন ডিজাইন - আগের মতো */
+        body { font-family: 'Segoe UI', sans-serif; margin: 0; padding: 0; background-color: #f8f9fa; }
+        header { background: #fff; padding: 25px; text-align: center; border-bottom: 2px solid #eaeaea; }
+        .logo { font-size: 26px; font-weight: bold; color: #1a1a1a; text-transform: uppercase; letter-spacing: 2px; }
+
+        .container { max-width: 1000px; margin: 0 auto; padding: 20px; }
+        h2 { text-align: center; color: #333; margin-bottom: 30px; }
+
+        /* প্রোডাক্ট গ্রিড */
+        .product-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
+            gap: 20px; 
+        }
+        .product { 
+            background: #fff; 
+            border-radius: 15px; 
+            padding: 15px; 
+            text-align: center; 
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08); 
+            transition: transform 0.2s;
+        }
+        .product:hover { transform: translateY(-5px); }
+        .product img { width: 100%; height: 220px; object-fit: cover; border-radius: 10px; }
+        .product h3 { font-size: 18px; margin: 15px 0 5px; color: #222; }
+        .product p { font-size: 16px; font-weight: bold; color: #d8246c; margin-bottom: 15px; }
+
+        /* অর্ডার বাটন */
+        .btn-order { 
+            background-color: #28a745; 
+            color: white; 
+            text-decoration: none; 
+            padding: 12px; 
+            display: block; 
+            border-radius: 8px; 
+            font-weight: bold; 
+            transition: background 0.3s;
+        }
+        .btn-order:hover { background-color: #218838; }
+        
+        footer { text-align: center; padding: 40px; color: #888; font-size: 14px; }
     </style>
 </head>
 <body>
 
-    <h2 style="text-align:center;">Old Money Collection</h2>
-    
-    <div class="product-grid">
-        <div class="product">
-            <img src="images%20(18).jpeg">
-            <h3>Premium Shirt</h3>
-            <p>৳550</p>
-            <a href="https://wa.me/8801832679053" class="btn-order">Order Now</a>
-        </div>
-        <div class="product">
-            <img src="winter-tshirt-men-black-1664371251-6562277.jpeg">
-            <h3>Winter T-shirt</h3>
-            <p>৳550</p>
-            <a href="https://wa.me/8801832679053" class="btn-order">Order Now</a>
-        </div>
-        <div class="product">
-            <img src="3616531283484_2_grande.jpg">
-            <h3>Cotton Polo</h3>
-            <p>৳650</p>
-            <a href="https://wa.me/8801832679053" class="btn-order">Order Now</a>
-        </div>
-        <div class="product">
-            <img src="images%20(19).jpeg">
-            <h3>Baggy Pant</h3>
-            <p>৳750</p>
-            <a href="https://wa.me/8801832679053" class="btn-order">Order Now</a>
+    <header>
+        <div class="logo">Vintage Vibes Shop</div>
+    </header>
+
+    <div class="container">
+        <h2>Our Collection</h2>
+        
+        <div class="product-grid">
+            <div class="product">
+                <img src="images%20(18).jpeg" alt="Premium Shirt">
+                <h3>Premium Old-Money Shirt</h3>
+                <p>৳550</p>
+                <a href="https://wa.me/8801832679053" class="btn-order">
+                    <i class="fab fa-whatsapp"></i> Order on WhatsApp
+                </a>
+            </div>
+
+            <div class="product">
+                <img src="winter-tshirt-men-black-1664371251-6562277.jpeg" alt="Winter T-shirt">
+                <h3>Black Winter T-shirt</h3>
+                <p>৳550</p>
+                <a href="https://wa.me/8801832679053" class="btn-order">
+                    <i class="fab fa-whatsapp"></i> Order on WhatsApp
+                </a>
+            </div>
+
+            <div class="product">
+                <img src="3616531283484_2_grande.jpg" alt="Cotton Polo">
+                <h3>Cotton Polo Shirt</h3>
+                <p>৳650</p>
+                <a href="https://wa.me/8801832679053" class="btn-order">
+                    <i class="fab fa-whatsapp"></i> Order on WhatsApp
+                </a>
+            </div>
+
+            <div class="product">
+                <img src="images%20(19).jpeg" alt="Baggy Pant">
+                <h3>Premium Baggy Pant</h3>
+                <p>৳750</p>
+                <a href="https://wa.me/8801832679053" class="btn-order">
+                    <i class="fab fa-whatsapp"></i> Order on WhatsApp
+                </a>
+            </div>
         </div>
     </div>
 
-    <section id="review-system">
-        <h3>গ্রাহকদের মতামত</h3>
-        <div id="review-container">লোড হচ্ছে...</div>
-        <textarea id="reviewInput" placeholder="আপনার রিভিউ লিখুন..."></textarea>
-        <button id="submitBtn" class="btn-review">Google Login & Review</button>
-    </section>
+    <footer>
+        &copy; 2023 Vintage Vibes Shop. All rights reserved.
+    </footer>
 
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-        import { getAuth, signInWithRedirect, getRedirectResult, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-        import { getFirestore, collection, addDoc, query, orderBy, onSnapshot } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
-
-        // আপনার স্ক্রিনশট থেকে নেওয়া সঠিক Config
-        const firebaseConfig = {
-            apiKey: "AIzaSyB6UEe9wpDIY60zZpG0VxnTQ0U8zZ_LhM", 
-            authDomain: "mystorereview.firebaseapp.com",
-            projectId: "mystorereview",
-            storageBucket: "mystorereview.firebasestorage.app",
-            messagingSenderId: "996106395850",
-            appId: "1:996106395850:web:b46daa626871e41c345433"
-        };
-
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-        const db = getFirestore(app);
-        const provider = new GoogleAuthProvider();
-
-        document.getElementById("submitBtn").addEventListener("click", () => {
-            const text = document.getElementById("reviewInput").value;
-            if(!text.trim()) { alert("দয়া করে কিছু লিখুন!"); return; }
-            localStorage.setItem("pendingReview", text);
-            signInWithRedirect(auth, provider);
-        });
-
-        getRedirectResult(auth).then(async (result) => {
-            const pendingText = localStorage.getItem("pendingReview");
-            if (result?.user && pendingText) {
-                await addDoc(collection(db, "reviews"), {
-                    name: result.user.displayName,
-                    text: pendingText,
-                    createdAt: new Date()
-                });
-                localStorage.removeItem("pendingReview");
-                alert("ধন্যবাদ! আপনার রিভিউ জমা হয়েছে।");
-            }
-        });
-
-        onSnapshot(query(collection(db, "reviews"), orderBy("createdAt", "desc")), (snap) => {
-            const container = document.getElementById("review-container");
-            container.innerHTML = "";
-            snap.forEach(doc => {
-                const d = doc.data();
-                container.innerHTML += `<div class="review-box"><strong>${d.name}</strong><p>${d.text}</p></div>`;
-            });
-        });
-    </script>
 </body>
 </html>
