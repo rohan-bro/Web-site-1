@@ -93,7 +93,9 @@
         const db = getFirestore(app);
         const provider = new GoogleAuthProvider();
 
-        document.getElementById("submitBtn").onclick = async () => {
+        // সরাসরি বাটন ক্লিক ইভেন্ট
+        const submitBtn = document.getElementById("submitBtn");
+        submitBtn.addEventListener("click", async () => {
             const text = document.getElementById("reviewInput").value;
             if (!text || text.trim() === "") {
                 alert("দয়া করে কিছু লিখুন!");
@@ -105,7 +107,7 @@
             } catch (err) {
                 alert("Error: " + err.message);
             }
-        };
+        });
 
         getRedirectResult(auth).then(async (result) => {
             const pendingText = localStorage.getItem("pendingReview");
@@ -121,14 +123,9 @@
             }
         });
 
-        const q = query(collection(db, "reviews"), orderBy("createdAt", "desc"));
-        onSnapshot(q, (snapshot) => {
+        onSnapshot(query(collection(db, "reviews"), orderBy("createdAt", "desc")), (snapshot) => {
             const container = document.getElementById("review-container");
             container.innerHTML = "";
-            if (snapshot.empty) {
-                container.innerHTML = "<p>এখনো কোনো রিভিউ নেই। প্রথম রিভিউটি আপনি দিন!</p>";
-                return;
-            }
             snapshot.forEach((doc) => {
                 const d = doc.data();
                 container.innerHTML += `
