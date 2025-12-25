@@ -3,77 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Old Money shirt and pants Shop</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Old Money Shirt and Pant Shop</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        /* আগের ডিজাইন বজায় রাখা হয়েছে */
-        .btn-order { background-color: #d8246c !important; color: white !important; margin-left: 10px; }
-        .product .btn-form { background-color: #28a745; display: block; margin-top: 10px; text-decoration: none; color: white; padding: 10px; border-radius: 5px; font-size: 14px; }
-        
-        /* রিভিউ সেকশন ডিজাইন */
-        #review-system { padding: 60px 20px; background: #fdfdfd; text-align: center; border-top: 1px solid #eee; }
-        .review-container { display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; margin-bottom: 40px; }
-        .review-box { background: white; padding: 20px; border-radius: 15px; width: 300px; text-align: left; box-shadow: 0 5px 20px rgba(0,0,0,0.05); border: 1px solid #f0f0f0; }
-        .user-info { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
-        .user-img { width: 45px; height: 45px; border-radius: 50%; border: 2px solid #1a1a1a; }
-        .user-name { margin: 0; font-size: 15px; font-weight: 600; color: #1a1a1a; }
-        .stars { color: #f1c40f; font-size: 13px; margin-bottom: 8px; }
-        .review-text { font-size: 14px; color: #555; line-height: 1.5; margin: 0; }
-        .review-form { max-width: 500px; margin: 0 auto; background: white; padding: 30px; border-radius: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.08); }
-        #reviewInput { width: 100%; height: 100px; border: 1px solid #ddd; padding: 15px; border-radius: 12px; font-size: 14px; resize: none; box-sizing: border-box; outline: none; }
-        .btn-review { margin-top: 15px; background: #1a1a1a; color: white; border: none; padding: 15px; border-radius: 35px; cursor: pointer; width: 100%; font-weight: bold; display: flex; align-items: center; justify-content: center; gap: 10px; font-size: 16px; transition: 0.3s; }
+        /* আপনার বর্তমান স্টাইলগুলো এখানে থাকবে */
+        #review-system { padding: 40px 20px; text-align: center; font-family: sans-serif; }
+        .review-box { background: #f9f9f9; padding: 15px; border-radius: 10px; margin-bottom: 10px; text-align: left; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        #reviewInput { width: 100%; max-width: 400px; height: 80px; padding: 10px; border-radius: 8px; border: 1px solid #ccc; }
+        .btn-review { background: #1a1a1a; color: white; padding: 12px 25px; border-radius: 25px; cursor: pointer; border: none; margin-top: 10px; }
     </style>
 </head>
 <body>
-    <header>
-        <nav>
-            <div class="logo"><img src="images.png" alt="Logo"> Vintage vibes </div>
-            <ul>
-                <li><a href="index.html">Home</a></li>
-                <li><a href="about.html">About</a></li>
-                <li><a href="contact.html">Contact</a></li>
-            </ul>
-        </nav>
-    </header>
-
-    <section class="hero">
-        <h1>Elegant Shirts & Pants for the Discerning Gentleman</h1>
-        <p>Timeless pieces inspired by classic style.</p>
-        <div style="display: flex; justify-content: center; gap: 10px; flex-wrap: wrap;">
-            <a href="#products" class="btn">Shop Now</a>
-            <a href="order.html" class="btn btn-order">Order Now</a>
-        </div>
-    </section>
-
-    <section id="products" class="products">
-        <h2>Featured Products</h2>
-        <div class="product-grid">
-            <div class="product">
-                <img src="images%20(18).jpeg" alt="Classic Shirt">
-                <h3>New trendy old-money premium shirt</h3>
-                <p>৳550</p>
-                <a href="https://wa.me/8801832679053" class="btn">WhatsApp</a>
-                <a href="order.html?product=Shirt&price=550" class="btn-form">Order via Form</a>
-            </div>
-            </div>
-    </section>
 
     <section id="review-system">
         <h2>গ্রাহকদের মতামত</h2>
-        <div id="review-container" class="review-container">
-            <p id="loading-text">রিভিউ লোড হচ্ছে...</p>
-        </div>
+        <div id="review-container"></div>
+        <hr>
         <div class="review-form">
-            <h3 style="margin-top:0;">আপনার অভিজ্ঞতা জানান</h3>
-            <textarea id="reviewInput" placeholder="আমাদের পোশাকের কোয়ালিটি আপনার কেমন লেগেছে?"></textarea>
+            <textarea id="reviewInput" placeholder="আপনার মতামত লিখুন..."></textarea><br>
             <button id="submitBtn" class="btn-review">
                 <i class="fab fa-google"></i> Google দিয়ে রিভিউ দিন
             </button>
         </div>
     </section>
-
-    <footer><p>&copy; 2023 Old Money Shop. All rights reserved.</p></footer>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
@@ -94,41 +46,32 @@
         const db = getFirestore(app);
         const provider = new GoogleAuthProvider();
 
-        // রিভিউ সাবমিট বাটন ক্লিক ফাংশন
-        document.getElementById("submitBtn").addEventListener("click", async () => {
+        // ১. বাটন ক্লিক করলে রিভিউ টেক্সট সেভ করা এবং রিডাইরেক্ট করা
+        document.getElementById("submitBtn").onclick = async () => {
             const text = document.getElementById("reviewInput").value;
             if (!text) return alert("দয়া করে কিছু লিখুন!");
             
-            // রিভিউ টেক্সটটি সাময়িকভাবে সেভ করে রাখা
+            // রিডাইরেক্ট হওয়ার আগে টেক্সটটি ব্রাউজারের মেমরিতে জমা রাখা
             localStorage.setItem("pendingReview", text);
-            
-            // গুগল রিডাইরেক্ট লগইন শুরু
             await signInWithRedirect(auth, provider);
-        });
+        };
 
-        // রিডাইরেক্ট হয়ে ফিরে আসার পর ডেটা সেভ করা
+        // ২. রিডাইরেক্ট হয়ে ফিরে আসার পর ডেটাবেসে রিভিউ জমা দেওয়া
         getRedirectResult(auth).then(async (result) => {
-            if (result && result.user) {
-                const user = result.user;
-                const text = localStorage.getItem("pendingReview");
-                
-                if (text) {
-                    await addDoc(collection(db, "reviews"), {
-                        name: user.displayName,
-                        photo: user.photoURL,
-                        text: text,
-                        createdAt: new Date()
-                    });
-                    localStorage.removeItem("pendingReview");
-                    document.getElementById("reviewInput").value = "";
-                    alert("ধন্যবাদ " + user.displayName + "! আপনার রিভিউ পোস্ট হয়েছে।");
-                }
+            const pendingText = localStorage.getItem("pendingReview");
+            if (result?.user && pendingText) {
+                await addDoc(collection(db, "reviews"), {
+                    name: result.user.displayName,
+                    photo: result.user.photoURL,
+                    text: pendingText,
+                    createdAt: new Date()
+                });
+                localStorage.removeItem("pendingReview");
+                alert("আপনার রিভিউটি সফলভাবে জমা হয়েছে!");
             }
-        }).catch((error) => {
-            console.error("Redirect Error:", error);
-        });
+        }).catch(err => console.error("Error:", err));
 
-        // রিয়েল-টাইম রিভিউ লোড করা
+        // ৩. রিভিউগুলো রিয়েল-টাইমে দেখানো
         const q = query(collection(db, "reviews"), orderBy("createdAt", "desc"));
         onSnapshot(q, (snapshot) => {
             const container = document.getElementById("review-container");
@@ -137,12 +80,8 @@
                 const d = doc.data();
                 container.innerHTML += `
                     <div class="review-box">
-                        <div class="user-info">
-                            <img src="${d.photo}" class="user-img">
-                            <h4 class="user-name">${d.name}</h4>
-                        </div>
-                        <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
-                        <p class="review-text">${d.text}</p>
+                        <strong>${d.name}</strong><br>
+                        <p>${d.text}</p>
                     </div>`;
             });
         });
