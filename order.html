@@ -6,75 +6,111 @@
     <title>অর্ডার কনফার্ম করুন</title>
     <style>
         body { font-family: 'Segoe UI', Arial, sans-serif; background-color: #f4f7f6; padding: 20px; }
-        .order-container { max-width: 480px; margin: auto; background: #fff; padding: 25px; border-radius: 12px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
-        h2 { text-align: center; color: #d8246c; margin-bottom: 20px; }
-        .form-group { margin-bottom: 15px; }
-        label { display: block; font-weight: bold; margin-bottom: 5px; color: #444; }
-        input, textarea, select { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; font-size: 15px; }
-        .fixed-val { background: #f9f9f9; color: #d8246c; font-weight: bold; border: 1px solid #eee; }
+        .order-container { max-width: 500px; margin: auto; background: #fff; padding: 25px; border-radius: 12px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+        h2 { text-align: center; color: #d8246c; }
+        .product-item { display: flex; justify-content: space-between; align-items: center; background: #f9f9f9; padding: 10px; margin-bottom: 10px; border-radius: 8px; border: 1px solid #eee; }
+        .product-info { flex-grow: 1; }
+        .qty-input { width: 50px; padding: 5px; border-radius: 5px; border: 1px solid #ccc; text-align: center; }
+        .total-section { background: #e9ecef; padding: 15px; border-radius: 8px; margin-top: 20px; font-weight: bold; }
         .payment-box { background: #fff0f5; border: 2px dashed #d8246c; padding: 15px; border-radius: 10px; margin-top: 20px; }
-        .btn-order { width: 100%; padding: 15px; background: #28a745; color: white; border: none; border-radius: 8px; font-size: 18px; font-weight: bold; cursor: pointer; margin-top: 20px; transition: 0.3s; }
-        .btn-order:hover { background: #218838; }
-        .charge-info { font-size: 13px; color: #666; margin-top: 5px; }
+        input[type="text"], input[type="tel"], textarea, select { width: 100%; padding: 12px; margin-top: 5px; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; }
+        .btn-order { width: 100%; padding: 15px; background: #28a745; color: white; border: none; border-radius: 8px; font-size: 18px; font-weight: bold; cursor: pointer; margin-top: 20px; }
     </style>
 </head>
 <body>
 
 <div class="order-container">
-    <h2>অর্ডার কনফার্ম করুন</h2>
+    <h2>অর্ডার ফর্ম</h2>
     
-    <form action="https://formspree.io/f/mjgbqdnr" method="POST">
+    <form action="https://formspree.io/f/mjgbqdnr" method="POST" id="orderForm">
         
-        <div class="form-group">
-            <label>প্রোডাক্টের নাম:</label>
-            <input type="text" name="Product_Name" id="p_name" class="fixed-val" readonly>
+        <label>প্রোডাক্ট সিলেক্ট করুন ও পরিমাণ লিখুন:</label>
+        
+        <div class="product-item">
+            <div class="product-info">
+                <input type="checkbox" class="prod-check" data-price="550" value="Old Money Shirt"> Old Money Shirt (৳550)
+            </div>
+            <input type="number" name="Qty_Shirt" class="qty-input" value="0" min="0">
         </div>
 
-        <div class="form-group">
-            <label>প্রোডাক্টের দাম (টাকা):</label>
-            <input type="text" name="Product_Price" id="p_price" class="fixed-val" readonly>
+        <div class="product-item">
+            <div class="product-info">
+                <input type="checkbox" class="prod-check" data-price="550" value="Winter T-shirt"> Winter T-shirt (৳550)
+            </div>
+            <input type="number" name="Qty_Tshirt" class="qty-input" value="0" min="0">
         </div>
 
-        <div class="form-group">
-            <label>আপনার নাম:</label>
-            <input type="text" name="Customer_Name" placeholder="পুরো নাম লিখুন" required>
+        <div class="product-item">
+            <div class="product-info">
+                <input type="checkbox" class="prod-check" data-price="650" value="Polo Shirt"> Polo Shirt (৳650)
+            </div>
+            <input type="number" name="Qty_Polo" class="qty-input" value="0" min="0">
         </div>
 
-        <div class="form-group">
-            <label>মোবাইল নম্বর:</label>
-            <input type="tel" name="Mobile_No" placeholder="০১৮XXXXXXXX" required>
+        <div class="product-item">
+            <div class="product-info">
+                <input type="checkbox" class="prod-check" data-price="750" value="Baggy Pant"> Baggy Pant (৳750)
+            </div>
+            <input type="number" name="Qty_Baggy" class="qty-input" value="0" min="0">
         </div>
 
-        <div class="form-group">
-            <label>পূর্ণ ঠিকানা:</label>
-            <textarea name="Full_Address" rows="3" placeholder="গ্রাম/রাস্তা, থানা, জেলা" required></textarea>
+        <label>ডেলিভারি এলাকা:</label>
+        <select name="Delivery_Area" id="deliveryArea" onchange="calculateTotal()">
+            <option value="80">ঢাকার ভিতরে (৮০ টাকা)</option>
+            <option value="150">ঢাকার বাইরে (১৫০ টাকা)</option>
+        </select>
+
+        <div class="total-section">
+            <p>সাব-টোটাল: ৳ <span id="subTotal">0</span></p>
+            <p>ডেলিভারি চার্জ: ৳ <span id="delCharge">80</span></p>
+            <hr>
+            <p style="font-size: 20px; color: #d8246c;">সর্বমোট: ৳ <span id="grandTotal">80</span></p>
+            <input type="hidden" name="Total_Amount" id="hiddenTotal">
         </div>
 
-        <div class="form-group">
-            <label>ডেলিভারি চার্জ:</label>
-            <select name="Delivery_Charge" required>
-                <option value="80">ঢাকার ভিতরে (৮০ টাকা)</option>
-                <option value="150">ঢাকার বাইরে (১৫০ টাকা)</option>
-            </select>
-            <div class="charge-info">* ঢাকার ভেতরে ৮০ টাকা, বাইরে ১৫০ টাকা।</div>
+        <div style="margin-top: 20px;">
+            <input type="text" name="Name" placeholder="আপনার নাম" required>
+            <input type="tel" name="Phone" placeholder="মোবাইল নম্বর" required>
+            <textarea name="Address" rows="3" placeholder="পূর্ণ ঠিকানা" required></textarea>
         </div>
 
         <div class="payment-box">
-            <p style="color: #d8246c; font-weight: bold; margin: 0 0 10px 0;">অর্ডার কনফার্ম করতে ডেলিভারি চার্জ আগে পে করুন।</p>
-            <p style="margin: 5px 0; font-size: 18px;"><strong>বিকাশ/নগদ (পার্সোনাল): 01832679053</strong></p>
-            <label>ট্রানজেকশন আইডি (TrxID):</label>
-            <input type="text" name="TrxID" placeholder="টাকা পাঠানোর পর TrxID এখানে দিন" required>
+            <p><strong>বিকাশ/নগদ (পার্সোনাল): 01832679053</strong></p>
+            <p style="font-size: 13px; color: red;">বিকাশ করার পর TrxID নিচে দিন:</p>
+            <input type="text" name="TrxID" placeholder="Transaction ID (TrxID)" required>
         </div>
 
-        <button type="submit" class="btn-order">অর্ডার কনফার্ম করুন</button>
+        <button type="submit" class="btn-order">অর্ডার প্লেস করুন</button>
     </form>
 </div>
 
 <script>
-    // URL থেকে নাম এবং দাম নেওয়ার স্ক্রিপ্ট
-    const params = new URLSearchParams(window.location.search);
-    document.getElementById('p_name').value = params.get('product') || 'প্রোডাক্ট সিলেক্ট করা হয়নি';
-    document.getElementById('p_price').value = params.get('price') || '০';
+    const checks = document.querySelectorAll('.prod-check');
+    const qtys = document.querySelectorAll('.qty-input');
+    const deliveryArea = document.getElementById('deliveryArea');
+
+    function calculateTotal() {
+        let subtotal = 0;
+        checks.forEach((check, index) => {
+            if (check.checked) {
+                let price = parseInt(check.getAttribute('data-price'));
+                let quantity = parseInt(qtys[index].value) || 1;
+                if(quantity === 0) quantity = 1; // অন্তত ১টি
+                subtotal += (price * quantity);
+            }
+        });
+
+        let delivery = parseInt(deliveryArea.value);
+        let grandTotal = subtotal + delivery;
+
+        document.getElementById('subTotal').innerText = subtotal;
+        document.getElementById('delCharge').innerText = delivery;
+        document.getElementById('grandTotal').innerText = grandTotal;
+        document.getElementById('hiddenTotal').value = grandTotal;
+    }
+
+    checks.forEach(c => c.addEventListener('change', calculateTotal));
+    qtys.forEach(q => q.addEventListener('input', calculateTotal));
 </script>
 
 </body>
