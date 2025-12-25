@@ -3,104 +3,95 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vintage Vibes Shop</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    
+    <title>Old Money shirt and pants Shop</title>
+    <link rel="stylesheet" href="styles.css">
     <style>
-        /* সম্পূর্ণ ক্লিন ডিজাইন - আগের মতো */
-        body { font-family: 'Segoe UI', sans-serif; margin: 0; padding: 0; background-color: #f8f9fa; }
-        header { background: #fff; padding: 25px; text-align: center; border-bottom: 2px solid #eaeaea; }
-        .logo { font-size: 26px; font-weight: bold; color: #1a1a1a; text-transform: uppercase; letter-spacing: 2px; }
-
-        .container { max-width: 1000px; margin: 0 auto; padding: 20px; }
-        h2 { text-align: center; color: #333; margin-bottom: 30px; }
-
-        /* প্রোডাক্ট গ্রিড */
-        .product-grid { 
-            display: grid; 
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
-            gap: 20px; 
+        /* Order Now বাটনের জন্য আলাদা একটু স্টাইল */
+        .btn-order {
+            background-color: #d8246c !important;
+            color: white !important;
+            margin-left: 10px;
         }
-        .product { 
-            background: #fff; 
-            border-radius: 15px; 
-            padding: 15px; 
-            text-align: center; 
-            box-shadow: 0 4px 12px rgba(0,0,0,0.08); 
-            transition: transform 0.2s;
+        .product .btn-form {
+            background-color: #28a745;
+            display: block;
+            margin-top: 10px;
+            text-decoration: none;
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 14px;
         }
-        .product:hover { transform: translateY(-5px); }
-        .product img { width: 100%; height: 220px; object-fit: cover; border-radius: 10px; }
-        .product h3 { font-size: 18px; margin: 15px 0 5px; color: #222; }
-        .product p { font-size: 16px; font-weight: bold; color: #d8246c; margin-bottom: 15px; }
-
-        /* অর্ডার বাটন */
-        .btn-order { 
-            background-color: #28a745; 
-            color: white; 
-            text-decoration: none; 
-            padding: 12px; 
-            display: block; 
-            border-radius: 8px; 
-            font-weight: bold; 
-            transition: background 0.3s;
-        }
-        .btn-order:hover { background-color: #218838; }
-        
-        footer { text-align: center; padding: 40px; color: #888; font-size: 14px; }
     </style>
 </head>
 <body>
-
     <header>
-        <div class="logo">Vintage Vibes Shop</div>
+        <nav>
+            <div class="logo"> 
+                <img src="images.png" alt="Logo"> 
+                Vintage vibes 
+            </div>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
     </header>
 
-    <div class="container">
-        <h2>Our Collection</h2>
-        
+    <section class="hero">
+        <h1>Elegant Shirts & Pants for the Discerning Gentleman</h1>
+        <p>Timeless pieces inspired by classic style.</p>
+        <div style="display: flex; justify-content: center; gap: 10px; flex-wrap: wrap;">
+            <a href="#products" class="btn">Shop Now</a>
+            <a href="order.html" class="btn btn-order">Order Now</a>
+        </div>
+    </section>
+
+    <section id="products" class="products">
+        <h2>Featured Products</h2>
         <div class="product-grid">
+            
             <div class="product">
-                <img src="images%20(18).jpeg" alt="Premium Shirt">
-                <h3>Premium Old-Money Shirt</h3>
+                <img src="images%20(18).jpeg" alt="Classic Shirt">
+                <h3>New trendy old-money premium shirt</h3>
                 <p>৳550</p>
-                <a href="https://wa.me/8801832679053" class="btn-order">
-                    <i class="fab fa-whatsapp"></i> Order on WhatsApp
-                </a>
+                <a href="https://wa.me/8801832679053?text=Hello! I want to buy the 'New trendy old-money premium shirt'. Price: ৳550" class="btn">WhatsApp</a>
+                <a href="order.html?product=Old Money Premium Shirt&price=550" class="btn-form">Order via Form</a>
             </div>
 
             <div class="product">
-                <img src="winter-tshirt-men-black-1664371251-6562277.jpeg" alt="Winter T-shirt">
-                <h3>Black Winter T-shirt</h3>
+                <img src="winter-tshirt-men-black-1664371251-6562277.jpeg" alt="Black Winter T-shirt">
+                <h3>T-shirt</h3>
                 <p>৳550</p>
-                <a href="https://wa.me/8801832679053" class="btn-order">
-                    <i class="fab fa-whatsapp"></i> Order on WhatsApp
-                </a>
+                <a href="https://wa.me/8801832679053?text=Hello! I want to buy the 'Black Winter T-shirt'. Price: ৳550" class="btn">WhatsApp</a>
+                <a href="order.html?product=T-shirt&price=550" class="btn-form">Order via Form</a>
             </div>
 
             <div class="product">
-                <img src="3616531283484_2_grande.jpg" alt="Cotton Polo">
+                <img src="3616531283484_2_grande.jpg" alt="Cotton Polo Shirt">
                 <h3>Cotton Polo Shirt</h3>
                 <p>৳650</p>
-                <a href="https://wa.me/8801832679053" class="btn-order">
-                    <i class="fab fa-whatsapp"></i> Order on WhatsApp
-                </a>
+                <a href="https://wa.me/8801832679053?text=Hello! I want to buy the 'Cotton Polo Shirt'. Price: ৳650" class="btn">WhatsApp</a>
+                <a href="order.html?product=Cotton Polo Shirt&price=650" class="btn-form">Order via Form</a>
             </div>
 
             <div class="product">
-                <img src="images%20(19).jpeg" alt="Baggy Pant">
-                <h3>Premium Baggy Pant</h3>
+                <img src="images%20(19).jpeg" alt="Low cut baggy">
+                <h3>Low cut baggy</h3>
                 <p>৳750</p>
-                <a href="https://wa.me/8801832679053" class="btn-order">
-                    <i class="fab fa-whatsapp"></i> Order on WhatsApp
-                </a>
+                <a href="https://wa.me/8801832679053?text=Hello! I want to buy the 'Low cut baggy'. Price: ৳750" class="btn">WhatsApp</a>
+                <a href="order.html?product=Low cut baggy&price=750" class="btn-form">Order via Form</a>
             </div>
+
         </div>
-    </div>
+    </section>
 
     <footer>
-        &copy; 2023 Vintage Vibes Shop. All rights reserved.
+        <p>&copy; 2023 Old Money Shirt and Pant Shop. All rights reserved.</p>
     </footer>
+
+    <script src="script.js"></script>
 
 </body>
 </html>
