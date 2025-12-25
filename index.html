@@ -27,15 +27,6 @@
         </nav>
     </header>
 
-    <section class="hero">
-        <h1>Elegant Shirts & Pants for the Discerning Gentleman</h1>
-        <p>Timeless pieces inspired by classic style.</p>
-        <div style="display: flex; justify-content: center; gap: 10px; flex-wrap: wrap;">
-            <a href="#products" class="btn">Shop Now</a>
-            <a href="order.html" class="btn btn-order">Order Now</a>
-        </div>
-    </section>
-
     <section id="products" class="products" style="padding: 20px;">
         <h2>Featured Products</h2>
         <div class="product-grid">
@@ -47,14 +38,14 @@
                 <a href="order.html?product=Premium Shirt&price=550" class="btn-form">Order via Form</a>
             </div>
             <div class="product">
-                <img src="winter-tshirt-men-black-1664371251-6562277.jpeg" alt="Black Winter T-shirt">
-                <h3>Black Winter T-shirt</h3>
+                <img src="winter-tshirt-men-black-1664371251-6562277.jpeg" alt="T-shirt">
+                <h3>T-shirt</h3>
                 <p>৳550</p>
                 <a href="https://wa.me/8801832679053" class="btn">WhatsApp</a>
-                <a href="order.html?product=Winter T-shirt&price=550" class="btn-form">Order via Form</a>
+                <a href="order.html?product=T-shirt&price=550" class="btn-form">Order via Form</a>
             </div>
             <div class="product">
-                <img src="3616531283484_2_grande.jpg" alt="Cotton Polo Shirt">
+                <img src="3616531283484_2_grande.jpg" alt="Polo Shirt">
                 <h3>Cotton Polo Shirt</h3>
                 <p>৳650</p>
                 <a href="https://wa.me/8801832679053" class="btn">WhatsApp</a>
@@ -88,13 +79,15 @@
         import { getAuth, signInWithRedirect, getRedirectResult, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
         import { getFirestore, collection, addDoc, query, orderBy, onSnapshot } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
+        // আপনার প্রোজেক্টের আসল কনফিগারেশন
         const firebaseConfig = {
-            apiKey: "AIzaSyB6UEe9wpDIY60zZPgG0Z6l8OEj4S8oEuo",
+            apiKey: "AIzaSyB6UEe9wpDIY60zZpG0VxnTQ0U8zZ_LhM", 
             authDomain: "mystorereview.firebaseapp.com",
             projectId: "mystorereview",
             storageBucket: "mystorereview.firebasestorage.app",
             messagingSenderId: "996106395850",
-            appId: "1:996106395850:web:b46765d779893433be5494"
+            appId: "1:996106395850:web:b46daa626871e41c345433",
+            measurementId: "G-8P3M6MZLN9"
         };
 
         const app = initializeApp(firebaseConfig);
@@ -108,12 +101,11 @@
                 alert("দয়া করে কিছু লিখুন!");
                 return;
             }
-            
             try {
                 localStorage.setItem("pendingReview", text);
                 await signInWithRedirect(auth, provider);
             } catch (err) {
-                alert("এরর: " + err.message);
+                alert("লগইন শুরু করতে সমস্যা হয়েছে: " + err.message);
             }
         };
 
@@ -136,7 +128,7 @@
             const container = document.getElementById("review-container");
             container.innerHTML = "";
             if (snapshot.empty) {
-                container.innerHTML = "<p>এখনো কোনো রিভিউ নেই।</p>";
+                container.innerHTML = "<p>এখনো কোনো রিভিউ নেই। প্রথম রিভিউটি আপনি দিন!</p>";
                 return;
             }
             snapshot.forEach((doc) => {
