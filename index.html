@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Old Money shirt and pants Shop</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         /* Order Now বাটনের জন্য আলাদা একটু স্টাইল */
         .btn-order {
@@ -22,6 +23,96 @@
             border-radius: 5px;
             font-size: 14px;
         }
+
+        /* রিভিউ সেকশন স্টাইল */
+        #review-system {
+            padding: 60px 20px;
+            background: #fdfdfd;
+            text-align: center;
+            border-top: 1px solid #eee;
+        }
+        .review-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            margin-bottom: 40px;
+        }
+        .review-box {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            width: 300px;
+            text-align: left;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+            border: 1px solid #f0f0f0;
+        }
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+        .user-img {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            border: 2px solid #1a1a1a;
+        }
+        .user-name {
+            margin: 0;
+            font-size: 15px;
+            font-weight: 600;
+            color: #1a1a1a;
+        }
+        .stars {
+            color: #f1c40f;
+            font-size: 13px;
+            margin-bottom: 8px;
+        }
+        .review-text {
+            font-size: 14px;
+            color: #555;
+            line-height: 1.5;
+            margin: 0;
+        }
+        .review-form {
+            max-width: 500px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+        }
+        #reviewInput {
+            width: 100%;
+            height: 100px;
+            border: 1px solid #ddd;
+            padding: 15px;
+            border-radius: 12px;
+            font-size: 14px;
+            resize: none;
+            box-sizing: border-box;
+            outline: none;
+        }
+        .btn-review {
+            margin-top: 15px;
+            background: #1a1a1a;
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 35px;
+            cursor: pointer;
+            width: 100%;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            font-size: 16px;
+            transition: 0.3s;
+        }
+        .btn-review:hover { background: #333; }
     </style>
 </head>
 <body>
@@ -87,11 +178,99 @@
         </div>
     </section>
 
+    <section id="review-system">
+        <h2>গ্রাহকদের মতামত</h2>
+        <div id="review-container" class="review-container">
+            <p id="loading-text">রিভিউ লোড হচ্ছে...</p>
+        </div>
+
+        <div class="review-form">
+            <h3 style="margin-top:0;">আপনার অভিজ্ঞতা জানান</h3>
+            <textarea id="reviewInput" placeholder="আমাদের পোশাকের কোয়ালিটি আপনার কেমন লেগেছে?"></textarea>
+            <button onclick="submitReview()" class="btn-review">
+                <i class="fab fa-google"></i> Google দিয়ে রিভিউ দিন
+            </button>
+        </div>
+    </section>
     <footer>
         <p>&copy; 2023 Old Money Shirt and Pant Shop. All rights reserved.</p>
     </footer>
 
-    <script src="script.js"></script>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getAuth, signInWithPopup, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+        import { getFirestore, collection, addDoc, query, orderBy, onSnapshot } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
+        // আপনার ফায়ারবেস কনফিগারেশন
+        const firebaseConfig = {
+            apiKey: "AIzaSyB6UEe9wpDIY60zZPgG0Z6l8OEj4S8oEuo",
+            authDomain: "mystorereview.firebaseapp.com",
+            projectId: "mystorereview",
+            storageBucket: "mystorereview.firebasestorage.app",
+            messagingSenderId: "996106395850",
+            appId: "1:996106395850:web:b46765d779893433be5494"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+        const provider = new GoogleAuthProvider();
+
+        // রিভিউ সাবমিট করার ফাংশন
+        window.submitReview = async () => {
+            const text = document.getElementById("reviewInput").value;
+            if (!text) return alert("দয়া করে কিছু লিখুন!");
+
+            try {
+                const result = await signInWithPopup(auth, provider);
+                const user = result.user;
+
+                await addDoc(collection(db, "reviews"), {
+                    name: user.displayName,
+                    photo: user.photoURL,
+                    text: text,
+                    createdAt: new Date()
+                });
+
+                document.getElementById("reviewInput").value = "";
+                alert("ধন্যবাদ " + user.displayName + "! আপনার রিভিউ সফলভাবে যুক্ত হয়েছে।");
+            } catch (e) {
+                console.error(e);
+                alert("লগইন করতে সমস্যা হয়েছে। Firebase এ Authorized Domain এবং Google Auth চেক করুন।");
+            }
+        };
+
+        // রিয়েল-টাইম রিভিউ লোড করা
+        const q = query(collection(db, "reviews"), orderBy("createdAt", "desc"));
+        onSnapshot(q, (snapshot) => {
+            const container = document.getElementById("review-container");
+            const loadingText = document.getElementById("loading-text");
+            if(loadingText) loadingText.remove();
+            
+            container.innerHTML = "";
+            
+            if (snapshot.empty) {
+                container.innerHTML = "<p>এখনো কোনো রিভিউ নেই। প্রথম রিভিউটি আপনি দিন!</p>";
+                return;
+            }
+
+            snapshot.forEach((doc) => {
+                const d = doc.data();
+                container.innerHTML += `
+                    <div class="review-box">
+                        <div class="user-info">
+                            <img src="${d.photo}" class="user-img" alt="User">
+                            <h4 class="user-name">${d.name}</h4>
+                        </div>
+                        <div class="stars">
+                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                        </div>
+                        <p class="review-text">${d.text}</p>
+                    </div>`;
+            });
+        });
+    </script>
+
+    <script src="script.js"></script>
 </body>
 </html>
