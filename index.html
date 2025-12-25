@@ -3,22 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Old Money shirt and pants Shop</title>
+    <title>Old Money Shirt and Pant Shop</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
+        /* ডিজাইন ঠিক রাখার জন্য CSS */
         .btn-order { background-color: #d8246c !important; color: white !important; margin-left: 10px; }
         .product .btn-form { background-color: #28a745; display: block; margin-top: 10px; text-decoration: none; color: white; padding: 10px; border-radius: 5px; font-size: 14px; }
         #review-system { padding: 40px 20px; text-align: center; background: #fff; border-top: 2px solid #eee; }
         .review-box { background: #f9f9f9; padding: 15px; border-radius: 10px; margin: 10px auto; text-align: left; max-width: 500px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); border: 1px solid #ddd; }
-        #reviewInput { width: 100%; max-width: 500px; height: 100px; padding: 10px; border-radius: 8px; border: 1px solid #ccc; margin-bottom: 10px; outline: none; }
+        #reviewInput { width: 100%; max-width: 500px; height: 100px; padding: 10px; border-radius: 8px; border: 1px solid #ccc; margin-bottom: 10px; outline: none; box-sizing: border-box; }
         .btn-review { background: #1a1a1a; color: white; padding: 12px 30px; border-radius: 25px; cursor: pointer; border: none; font-weight: bold; display: flex; align-items: center; justify-content: center; gap: 10px; margin: 0 auto; }
     </style>
 </head>
 <body>
     <header>
         <nav>
-            <div class="logo"> <img src="images.png" alt="Logo"> Vintage vibes </div>
+            <div class="logo"><img src="images.png" alt="Logo"> Vintage vibes</div>
             <ul>
                 <li><a href="index.html">Home</a></li>
                 <li><a href="about.html">About</a></li>
@@ -46,35 +47,12 @@
                 <a href="https://wa.me/8801832679053" class="btn">WhatsApp</a>
                 <a href="order.html?product=Premium Shirt&price=550" class="btn-form">Order via Form</a>
             </div>
-            <div class="product">
-                <img src="winter-tshirt-men-black-1664371251-6562277.jpeg" alt="Black Winter T-shirt">
-                <h3>T-shirt</h3>
-                <p>৳550</p>
-                <a href="https://wa.me/8801832679053" class="btn">WhatsApp</a>
-                <a href="order.html?product=T-shirt&price=550" class="btn-form">Order via Form</a>
             </div>
-            <div class="product">
-                <img src="3616531283484_2_grande.jpg" alt="Cotton Polo Shirt">
-                <h3>Cotton Polo Shirt</h3>
-                <p>৳650</p>
-                <a href="https://wa.me/8801832679053" class="btn">WhatsApp</a>
-                <a href="order.html?product=Cotton Polo Shirt&price=650" class="btn-form">Order via Form</a>
-            </div>
-            <div class="product">
-                <img src="images%20(19).jpeg" alt="Low cut baggy">
-                <h3>Low cut baggy</h3>
-                <p>৳750</p>
-                <a href="https://wa.me/8801832679053" class="btn">WhatsApp</a>
-                <a href="order.html?product=Low cut baggy&price=750" class="btn-form">Order via Form</a>
-            </div>
-        </div>
     </section>
 
     <section id="review-system">
         <h2>গ্রাহকদের মতামত</h2>
-        <div id="review-container">
-            <p>রিভিউ লোড হচ্ছে...</p>
-        </div>
+        <div id="review-container"><p>রিভিউ লোড হচ্ছে...</p></div>
         <div class="review-form" style="margin-top: 30px;">
             <textarea id="reviewInput" placeholder="আপনার মূল্যবান মতামত এখানে লিখুন..."></textarea><br>
             <button id="submitBtn" class="btn-review">
@@ -83,9 +61,7 @@
         </div>
     </section>
 
-    <footer>
-        <p>&copy; 2023 Old Money Shirt and Pant Shop. All rights reserved.</p>
-    </footer>
+    <footer><p>&copy; 2023 Old Money Shirt and Pant Shop. All rights reserved.</p></footer>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
@@ -106,16 +82,20 @@
         const db = getFirestore(app);
         const provider = new GoogleAuthProvider();
 
-        document.getElementById("submitBtn").onclick = async () => {
+        // বাটন ক্লিক ফাংশন
+        document.getElementById("submitBtn").addEventListener("click", async () => {
             const text = document.getElementById("reviewInput").value;
             if (!text) return alert("দয়া করে কিছু লিখুন!");
+            
+            // রিডাইরেক্ট হওয়ার আগে টেক্সটটি সেভ করে রাখা
             localStorage.setItem("pendingReview", text);
             await signInWithRedirect(auth, provider);
-        };
+        });
 
+        // লগইন শেষে ফিরে আসার পর ডাটা জমা দেওয়া
         getRedirectResult(auth).then(async (result) => {
             const pendingText = localStorage.getItem("pendingReview");
-            if (result?.user && pendingText) {
+            if (result && result.user && pendingText) {
                 await addDoc(collection(db, "reviews"), {
                     name: result.user.displayName,
                     photo: result.user.photoURL,
@@ -123,14 +103,16 @@
                     createdAt: new Date()
                 });
                 localStorage.removeItem("pendingReview");
-                alert("আপনার রিভিউটি জমা হয়েছে!");
+                alert("আপনার রিভিউটি সফলভাবে পোস্ট হয়েছে!");
             }
-        });
+        }).catch((error) => console.error("Error:", error));
 
+        // রিভিউগুলো রিয়েল-টাইমে দেখানো
         const q = query(collection(db, "reviews"), orderBy("createdAt", "desc"));
         onSnapshot(q, (snapshot) => {
             const container = document.getElementById("review-container");
             container.innerHTML = "";
+            if (snapshot.empty) container.innerHTML = "<p>এখনো কোনো রিভিউ নেই। প্রথম রিভিউটি আপনি দিন!</p>";
             snapshot.forEach((doc) => {
                 const d = doc.data();
                 container.innerHTML += `
